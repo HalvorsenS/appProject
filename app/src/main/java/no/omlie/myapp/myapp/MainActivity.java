@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> todo;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_pirates:
+                if (checked)
+                    girlActivity(view);
+                    break;
+            case R.id.radio_ninjas:
+                if (checked)
+                    boyActivity(view);
+                    break;
+        }
+    }
+
+    private void girlActivity(View view) {
+        Intent intent = new Intent(this, DisplayGirlActivity.class);
+        EditText editText = (EditText) findViewById(R.id.edit_message);
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
+    }
+
+    public void boyActivity(View view) {
+        Intent intent = new Intent(this, DisplayBoyActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         intent.putExtra(EXTRA_MESSAGE, message);
@@ -51,23 +77,7 @@ public class MainActivity extends AppCompatActivity {
         return todo;
     }
 
-    public ArrayList<String> initboy(){
-        todo = new ArrayList<>();
-        todo.add("You look just like your mom.");
-        todo.add("You are so handsome!");
-        todo.add("Powerful!");
-        todo.add("You are the strongest of all!");
-        todo.add("You are the best of the best!");
-        todo.add("You are incomparable!");
-        todo.add("Your charm is irresistible!");
-        todo.add("You are so seductive!");
-        todo.add("Your smile…wow!");
-        todo.add("You make me laugh like no other!");
-        todo.add("You are my cup of tea!");
-        todo.add("Wow - you really have been working out.");
-        todo.add("There's such warmth in your eyes.");
-        return todo;
-    }
+
     public void displayText(View view) {
 
     }
